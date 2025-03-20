@@ -1,0 +1,90 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #EEEEEE;
+}
+
+#main-container {
+    border: 1px solid black;
+    width: 40rem;
+    height: 24rem;
+    margin: 5rem auto;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.5rem;
+}
+
+#input-output-container {
+    width: 100%;
+}
+
+#display-screen {
+    margin: 0; 
+    width: 100%;
+    height: 4rem;
+    border-radius: 0.5rem 0.5rem 0 0;
+}
+
+#digits-operators-container {
+    /* border: 1px solid red; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: flex-start;
+    position: relative;
+    border-radius: 0.5rem;
+    height: 20rem;
+}
+
+.rows {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.rows button {
+    width: 25%;
+    height: 4rem;
+    font-size: 1.5rem;
+    text-align: center;
+    border: 1px solid black;
+    cursor: pointer;
+    padding: none;
+}
+
+.rows button:hover {
+    background-color: #e8e8e8;
+}
+
+#equals-button {
+    position: absolute;
+    top: 4rem;
+    right: 0;
+    height: 16rem;
+    width: 25%;
+}
+
+#equals-button {
+    border-radius: 0 0 0.5rem;
+    background-color: #dedede;
+}
+
+#equals-button:hover {
+    background-color: #e8e8e8;
+}
+
+#zero-button {
+    border-radius: 0 0 0 0.5rem;
+}
+
+.operators {
+    background-color: #dedede;
+}
+
+#digits-container-row5 button, #equals-button {
+    border-bottom: 2px solid black;
+}
