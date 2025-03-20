@@ -10,25 +10,77 @@ const buttons = document.querySelectorAll("button");
 let a = ""; // first number
 let o = ""; // operator
 let b = ""; // second number
+let resetDisplay = false;
+
 
 buttons.forEach(button => {
     button.addEventListener("click", () => {
         // console.log(button.textContent);
+
         let clickedButton = button.textContent;
 
         if (button.className === "digits") {
-            if (o == "") {
-                a = a + clickedButton; // Store multi-digit inputs with a += clickedButton
-                displayField.value = a;
+            
+            if (a == "E")
+                return;
+
+            if (resetDisplay) {
+
+                if (o == "")
+                    a = a + clickedButton;
+                
+                // o = "";
+                // b = "";
+
+                else 
+                    b = b + clickedButton;
+
+                resetDisplay = false;
             }
 
             else {
-                b = b + clickedButton;
-                displayField.value = a + " " + o + " " + b;
+                
+                // a = "";
+                // o = "";
+
+                if (o == "") {
+                    a = a + clickedButton;
+                }
+
+                else {
+                    b = b + clickedButton;
+                }
             }
+
+            displayField.value = a + (o ? " " + o + " " + b : "");
+
+            // if (o == "") {
+            //     a = a + clickedButton; // Store multi-digit inputs with a += clickedButton
+            //     displayField.value = a;
+            // }
+
+            // else {
+            //     b = b + clickedButton;
+            //     displayField.value = a + " " + o + " " + b;
+            // }
         }
 
         else if (button.className === "operators") {
+
+            if (a == "" || a == "E")
+                return;
+
+            if (o != "" && b != "") {
+                let A = parseFloat(a);
+                let B = parseFloat(b);
+                operate(A, B, o);
+
+                a = displayField.value;
+                console.log("Hello from " + a);
+                a = parseFloat(a);
+                b = "";
+            }
+
             o = clickedButton;
             displayField.value = a + " " + o;
             console.log(o);
@@ -36,10 +88,50 @@ buttons.forEach(button => {
 
         else if (button.id == "equals-button") {
 
-            let A = parseInt(a);
-            let B = parseInt(b);
+            if (a == "" || b == "")
+                return;
+
+            let A = parseFloat(a);
+            let B = parseFloat(b);
 
             operate(A, B, o);
+
+        }
+
+        else if (button.id == "point-button") {
+            
+            if (a == "E")
+                return;
+
+            if (o === "") { 
+
+                if (!a.includes(".")) {
+                    
+                    if (a === "") {
+                        a = "0."; 
+                    } 
+                    
+                    else {
+                        a = a + ".";
+                    }
+                }
+
+            } 
+            
+            else { 
+
+                if (!b.includes(".")) {
+                    if (b === "") {
+                        b = "0.";
+                    } 
+                    
+                    else {
+                        b += ".";
+                    }
+                }
+            }
+
+            displayField.value = a + (o ? " " + o + " " + b : "");
 
         }
 
@@ -70,11 +162,22 @@ function operate(A, B, o) {
 
     console.log(result);
 
-    displayField.value = result;
+    if (result === "E") {
+        displayField.value = result;
+    } 
+    
+    else {
+        result = parseFloat(result.toFixed(5)); // Round only if it's a number
+        displayField.value = result;
+    }
+
+    console.log(result);
 
     a = result.toString();
     o = "";
     b = "";
+
+    resetDisplay = true;
     
 }
 
