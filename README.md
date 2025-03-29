@@ -1,2 +1,7 @@
-You can view the live version of the project at:  
-[Calculator Live Demo](https://taimourshmait.github.io/basic-calculator-js-dom/)
+# Basic Calculator JS
+
+A simple calculator built with JavaScript.
+
+## Installation
+1. Clone this repository: `git clone https://github.com/TaimourShmait/basic-calculator-js.git`
+2. Open the `index.html` file in your browser.
