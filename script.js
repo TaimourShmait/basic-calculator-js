@@ -12,10 +12,8 @@ let o = ""; // operator
 let b = ""; // second number
 let resetDisplay = false;
 
-
 buttons.forEach(button => {
     button.addEventListener("click", () => {
-        // console.log(button.textContent);
 
         let clickedButton = button.textContent;
 
@@ -29,9 +27,6 @@ buttons.forEach(button => {
                 if (o == "")
                     a = a + clickedButton;
                 
-                // o = "";
-                // b = "";
-
                 else 
                     b = b + clickedButton;
 
@@ -39,9 +34,6 @@ buttons.forEach(button => {
             }
 
             else {
-                
-                // a = "";
-                // o = "";
 
                 if (o == "") {
                     a = a + clickedButton;
@@ -53,37 +45,28 @@ buttons.forEach(button => {
             }
 
             displayField.value = a + (o ? " " + o + " " + b : "");
-
-            // if (o == "") {
-            //     a = a + clickedButton; // Store multi-digit inputs with a += clickedButton
-            //     displayField.value = a;
-            // }
-
-            // else {
-            //     b = b + clickedButton;
-            //     displayField.value = a + " " + o + " " + b;
-            // }
         }
 
         else if (button.className === "operators") {
 
-            if (a == "" || a == "E")
+            if (a == "" || a == "E" || isNaN(a)) {
                 return;
+            }
 
             if (o != "" && b != "") {
+
                 let A = parseFloat(a);
                 let B = parseFloat(b);
+
                 operate(A, B, o);
 
                 a = displayField.value;
-                console.log("Hello from " + a);
                 a = parseFloat(a);
                 b = "";
             }
 
             o = clickedButton;
             displayField.value = a + " " + o;
-            console.log(o);
         }
 
         else if (button.id == "equals-button") {
@@ -95,7 +78,6 @@ buttons.forEach(button => {
             let B = parseFloat(b);
 
             operate(A, B, o);
-
         }
 
         else if (button.id == "point-button") {
@@ -132,11 +114,10 @@ buttons.forEach(button => {
             }
 
             displayField.value = a + (o ? " " + o + " " + b : "");
-
         }
-
     });
 });
+
 
 function operate(A, B, o) {   
     console.log(A + o + B);
@@ -151,8 +132,7 @@ function operate(A, B, o) {
         result = subtract(A, B);
     }
 
-    else if (o == "×") {
-        console.log(o);
+    else if (o == "×") {;
         result = multiply(A, B);
     }
 
@@ -160,10 +140,13 @@ function operate(A, B, o) {
         result = divide(A, B);
     }
 
-    console.log(result);
-
-    if (result === "E") {
-        displayField.value = result;
+    if (result === "E" || isNaN(result)) {
+        displayField.value = "E";
+        a = "E";
+        o = "";
+        b = "";
+        resetDisplay = true;
+        return;
     } 
     
     else {
@@ -174,11 +157,10 @@ function operate(A, B, o) {
     console.log(result);
 
     a = result.toString();
+
     o = "";
     b = "";
-
     resetDisplay = true;
-    
 }
 
 function add(A, B) {
@@ -206,6 +188,3 @@ clearButton.addEventListener("click", () => {
     result = "";
     displayField.value = "";
 });
-
-
-
